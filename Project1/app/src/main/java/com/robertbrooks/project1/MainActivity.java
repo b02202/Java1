@@ -66,6 +66,9 @@ public class MainActivity extends ActionBarActivity {
                 int num = mTestList.size();
                 mNumberEntries.setText(num + "");
 
+                // Call calcAverage Function
+                calcAverage();
+
                 // ListView Implementation
                 ListView listView = (ListView) findViewById(R.id.listView);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -79,7 +82,7 @@ public class MainActivity extends ActionBarActivity {
                         // Set Title
                         userAlert.setTitle("User Alert");
                         // message
-                        userAlert.setMessage("This is a test message.");
+                        userAlert.setMessage(alertText);
                         // Ok button
                         userAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
@@ -87,7 +90,9 @@ public class MainActivity extends ActionBarActivity {
 
                             }
                         });
+                        userAlert.show();
                     }
+
                 });
 
 
