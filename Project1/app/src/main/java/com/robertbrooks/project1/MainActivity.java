@@ -1,5 +1,7 @@
 package com.robertbrooks.project1;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,6 +28,7 @@ public class MainActivity extends ActionBarActivity {
     private TextView mNumberEntries;
     private String word;
     private TextView mAvgText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +72,21 @@ public class MainActivity extends ActionBarActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         TextView selected = (TextView) view;
-                        selected.getText().toString();
+                        String alertText = selected.getText().toString();
+
+                        // create AlertDialog
+                        AlertDialog.Builder userAlert = new AlertDialog.Builder(MainActivity.this);
+                        // Set Title
+                        userAlert.setTitle("User Alert");
+                        // message
+                        userAlert.setMessage("This is a test message.");
+                        // Ok button
+                        userAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
                     }
                 });
 
