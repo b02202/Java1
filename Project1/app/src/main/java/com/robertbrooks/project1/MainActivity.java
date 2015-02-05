@@ -4,7 +4,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,6 +30,27 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // References to user, numberEntries, averageLength text fields
+        mUserText = (TextView) findViewById(R.id.userText);
+        mNumberEntries = (TextView) findViewById(R.id.numberEntries);
+        mAvgText = (TextView) findViewById(R.id.averageLength);
+
+        // Reference for listView
+        mListView = (ListView) findViewById(R.id.listView);
+
+        // Create adapter for listView
+        mArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mTestList);
+        mListView.setAdapter(mArrayAdapter);
+
+        // user button implementation
+        Button button = (Button) findViewById(R.id.userButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
 
