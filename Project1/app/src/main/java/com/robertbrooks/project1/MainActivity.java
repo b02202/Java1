@@ -61,7 +61,7 @@ public class MainActivity extends ActionBarActivity {
 
                 // set number of entries text view
                 int num = mTestList.size();
-                mNumberEntries.setText("" + num);
+                mNumberEntries.setText(num + "");
 
                 // ListView Implementation
                 ListView listView = (ListView) findViewById(R.id.listView);
@@ -106,4 +106,15 @@ public class MainActivity extends ActionBarActivity {
     // Custom Functions
 
     // Calculate average
+
+    public void calcAverage()
+    {
+        int sum = 0;
+        double average;
+        for (String word : mTestList)
+            sum += word.length();
+        average = (double) sum/mTestList.size();
+        // set mAvgText
+        mAvgText.setText(average + "");
+    }
 }
