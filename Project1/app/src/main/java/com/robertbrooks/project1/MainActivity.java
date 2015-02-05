@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -48,9 +49,35 @@ public class MainActivity extends ActionBarActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // get text from user input
+                String add = mUserText.getText().toString();
+                word = mUserText.getText().toString();
+
+                //Check for duplicates to ensure only unique values are stored
+                if(!mTestList.contains(add))
+                    mTestList.add(word);
+                // notifyDataSetChanged
+                mArrayAdapter.notifyDataSetChanged();
+
+                // set number of entries text view
+                int num = mTestList.size();
+                mNumberEntries.setText("" + num);
+
+                // ListView Implementation
+                ListView listView = (ListView) findViewById(R.id.listView);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        TextView selected = (TextView) view;
+                        selected.getText().toString();
+                    }
+                });
+
 
             }
         });
+
+
     }
 
 
@@ -75,4 +102,8 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    // Custom Functions
+
+    // Calculate average
 }
