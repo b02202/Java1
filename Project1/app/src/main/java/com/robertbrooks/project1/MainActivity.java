@@ -4,9 +4,25 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    final String TAG = "Main Activity";
+    private TextView mUserText;
+    private ListView mListView;
+    private ArrayAdapter mArrayAdapter;
+    private ArrayList<String> mTestList = new ArrayList<String>();
+    private TextView mNumberEntries;
+    private String word;
+    private TextView mAvgText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
