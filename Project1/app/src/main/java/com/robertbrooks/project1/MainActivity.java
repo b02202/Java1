@@ -88,21 +88,16 @@ public class MainActivity extends ActionBarActivity {
                         userAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                // code here for "ok" button if desired
                             }
                         });
+                        // display userAlert
                         userAlert.show();
                     }
-
                 });
-
-
             }
         });
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
