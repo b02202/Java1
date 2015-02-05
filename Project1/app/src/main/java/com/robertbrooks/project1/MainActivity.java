@@ -68,6 +68,7 @@ public class MainActivity extends ActionBarActivity {
 
                 // Call calcAverage Function
                 calcAverage();
+                mUserText.setText("");
 
                 // ListView Implementation
                 ListView listView = (ListView) findViewById(R.id.listView);
