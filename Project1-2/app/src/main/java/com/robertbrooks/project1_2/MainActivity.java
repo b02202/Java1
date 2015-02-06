@@ -68,7 +68,17 @@ public class MainActivity extends ActionBarActivity {
                 calcAverage();
                 mUserText.setText("");
 
+                // ListView Implementation
+                ListView listView = (ListView) findViewById(R.id.listView);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        TextView selected = (TextView) view;
+                        String alertText = selected.getText().toString();
 
+
+                    }
+                });
             }
         });
     }
