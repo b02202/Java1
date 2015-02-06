@@ -27,6 +27,18 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // References to user, numberEntries, averageLength text fields
+        mUserText = (TextView) findViewById(R.id.userText);
+        mNumberEntries = (TextView) findViewById(R.id.numberEntries);
+        mAvgText = (TextView) findViewById(R.id.averageLength);
+
+        // Reference for listView
+        mListView = (ListView) findViewById(R.id.listView);
+
+        // Create adapter for listView
+        mArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mTestList);
+        mListView.setAdapter(mArrayAdapter);
     }
 
 
