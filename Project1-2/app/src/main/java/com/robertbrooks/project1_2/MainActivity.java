@@ -64,6 +64,10 @@ public class MainActivity extends ActionBarActivity {
                 int num = mTestList.size();
                 mNumberEntries.setText(num + "");
 
+                // Call calcAverage Function
+                calcAverage();
+                mUserText.setText("");
+
 
             }
         });
@@ -90,5 +94,19 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+   // Custom Functions
+
+    // Calculate Average
+    public void calcAverage()
+    {
+        int sum = 0;
+        double average;
+        for (String word : mTestList)
+            sum += word.length();
+        average = (double) sum/mTestList.size();
+        // set mAvgText
+        mAvgText.setText(average + "");
     }
 }
