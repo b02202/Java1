@@ -55,8 +55,10 @@ public class MainActivity extends ActionBarActivity {
                 word = mUserText.getText().toString();
 
                 //Check for duplicates to ensure only unique values are stored
-                if(!mTestList.contains(add))
+                if(!mTestList.contains(add)) {
                     mTestList.add(word);
+                    mUserText.setText("");
+                }
                 // notifyDataSetChanged
                 mArrayAdapter.notifyDataSetChanged();
 
@@ -66,7 +68,7 @@ public class MainActivity extends ActionBarActivity {
 
                 // Call calcAverage Function
                 calcAverage();
-                mUserText.setText("");
+
 
                 // ListView Implementation
                 ListView listView = (ListView) findViewById(R.id.listView);
