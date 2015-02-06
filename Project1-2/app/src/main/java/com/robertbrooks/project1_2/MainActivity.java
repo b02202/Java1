@@ -60,6 +60,10 @@ public class MainActivity extends ActionBarActivity {
                 // notifyDataSetChanged
                 mArrayAdapter.notifyDataSetChanged();
 
+                // set number of entries text view
+                int num = mTestList.size();
+                mNumberEntries.setText(num + "");
+
 
             }
         });
