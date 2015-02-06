@@ -76,7 +76,21 @@ public class MainActivity extends ActionBarActivity {
                         TextView selected = (TextView) view;
                         String alertText = selected.getText().toString();
 
-
+                        // create AlertDialog
+                        AlertDialog.Builder userAlert = new AlertDialog.Builder(MainActivity.this);
+                        // Set Title
+                        userAlert.setTitle("User Alert");
+                        // message
+                        userAlert.setMessage(alertText);
+                        // Ok button
+                        userAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // code here for "ok" button if desired
+                            }
+                        });
+                        // display userAlert
+                        userAlert.show();
                     }
                 });
             }
