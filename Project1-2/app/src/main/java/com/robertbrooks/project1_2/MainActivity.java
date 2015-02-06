@@ -1,10 +1,15 @@
 package com.robertbrooks.project1_2;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,6 +44,25 @@ public class MainActivity extends ActionBarActivity {
         // Create adapter for listView
         mArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mTestList);
         mListView.setAdapter(mArrayAdapter);
+
+        // user button implementation
+        Button button = (Button) findViewById(R.id.userButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // get text from user input
+                String add = mUserText.getText().toString();
+                word = mUserText.getText().toString();
+
+                //Check for duplicates to ensure only unique values are stored
+                if(!mTestList.contains(add))
+                    mTestList.add(word);
+                // notifyDataSetChanged
+                mArrayAdapter.notifyDataSetChanged();
+
+
+            }
+        });
     }
 
 
