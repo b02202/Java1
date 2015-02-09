@@ -63,8 +63,7 @@ public class MainActivity extends ActionBarActivity {
                 mArrayAdapter.notifyDataSetChanged();
 
                 // set number of entries text view
-                int num = mTestList.size();
-                mNumberEntries.setText(num + "");
+                updateText();
 
                 // Call calcAverage Function
                 calcAverage();
@@ -99,6 +98,10 @@ public class MainActivity extends ActionBarActivity {
                                 mTestList.remove(alertText);
                                 // notifyDataSetChanged
                                 mArrayAdapter.notifyDataSetChanged();
+                                // calculate average and update
+                                calcAverage();
+                                // update mNumberEntries
+                                updateText();
 
                             }
                         });
@@ -146,4 +149,11 @@ public class MainActivity extends ActionBarActivity {
         // set mAvgText
         mAvgText.setText(average + "");
     }
+
+    public void updateText()
+    {
+        int num = mTestList.size();
+        mNumberEntries.setText(num + "");
+    }
+
 }
