@@ -81,18 +81,18 @@ public class MainActivity extends ActionBarActivity {
                         // create AlertDialog
                         AlertDialog.Builder userAlert = new AlertDialog.Builder(MainActivity.this);
                         // Set Title
-                        userAlert.setTitle("User Alert");
+                        userAlert.setTitle(R.string.user_alert);
                         // message
                         userAlert.setMessage(alertText);
                         // Ok button
-                        userAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        userAlert.setPositiveButton(R.string.ok_alert, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // code here for "ok" button if desired
                             }
                         });
                         // remove button
-                        userAlert.setNegativeButton("Remove", new DialogInterface.OnClickListener() {
+                        userAlert.setNegativeButton(R.string.remove_alert, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 mTestList.remove(alertText);

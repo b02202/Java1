@@ -44,13 +44,13 @@
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:id="@+id/numberEntries"
-        android:hint="Number of Entries."/>
+        android:hint="@string/num_entries"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:id="@+id/averageLength"
-        android:hint="Average length of entries."/>
+        android:hint="@string/avg_length"/>
 
 
 </LinearLayout>

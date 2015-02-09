@@ -6,5 +6,11 @@
     <string name="action_settings">Settings</string>
     <string name="btn_text">Submit</string>
     <string name="type_something">Enter Text Here</string>
+    <string name="num_entries">Number of entries</string>
+    <string name="avg_length">Average length of entries</string>
+    <string name="user_alert">User Alert</string>
+    <string name="ok_alert">OK</string>
+    <string name="remove_alert">Remove</string>
+
 
 </resources>

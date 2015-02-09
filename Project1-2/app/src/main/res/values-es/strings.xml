@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Prueba Justo</string>
+    <string name="hello_world">Hola Mundo!</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="btn_text">presentar</string>
+    <string name="type_something">Introduzca texto aquí</string>
+    <string name="num_entries">Número de entradas</string>
+    <string name="avg_length">Duración media de las entradas</string>
+    <string name="user_alert">Alerta Usuario</string>
+    <string name="ok_alert">Bueno</string>
+    <string name="remove_alert">Quitar</string>
+
+</resources>
