@@ -76,7 +76,8 @@ public class MainActivity extends ActionBarActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         TextView selected = (TextView) view;
-                        String alertText = selected.getText().toString();
+                        final String alertText = selected.getText().toString();
+
 
                         // create AlertDialog
                         AlertDialog.Builder userAlert = new AlertDialog.Builder(MainActivity.this);
@@ -89,6 +90,16 @@ public class MainActivity extends ActionBarActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // code here for "ok" button if desired
+                            }
+                        });
+                        // remove button
+                        userAlert.setNegativeButton("Remove", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mTestList.remove(alertText);
+                                // notifyDataSetChanged
+                                mArrayAdapter.notifyDataSetChanged();
+
                             }
                         });
                         // display userAlert
