@@ -54,7 +54,6 @@ public class MainActivity extends ActionBarActivity {
                 // get text from user input
                 add = mUserText.getText().toString();
                 word = mUserText.getText().toString();
-
                 // run duplicate check
                 dupCheck();
                 // notifyDataSetChanged
@@ -63,7 +62,6 @@ public class MainActivity extends ActionBarActivity {
                 updateText();
                 // Call calcAverage Function
                 calcAverage();
-
 
                 // ListView Implementation
                 ListView listView = (ListView) findViewById(R.id.listView);
@@ -98,7 +96,6 @@ public class MainActivity extends ActionBarActivity {
                                 calcAverage();
                                 // update mNumberEntries
                                 updateText();
-
                             }
                         });
                         // display userAlert
@@ -171,10 +168,9 @@ public class MainActivity extends ActionBarActivity {
     public void dupCheck()
     {
         //Check for duplicates to ensure only unique values are stored
-        if(!mTestList.contains(add) && word.length() > 0) {
+        if(!mTestList.contains(add) && word.trim().length() > 0) {
             mTestList.add(word);
             mUserText.setText("");
         }
     }
-
 }
