@@ -26,6 +26,7 @@ public class MainActivity extends ActionBarActivity {
     private TextView mNumberEntries;
     private String word;
     private TextView mAvgText;
+    private String add;
 
 
     @Override
@@ -51,20 +52,15 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 // get text from user input
-                String add = mUserText.getText().toString();
+                add = mUserText.getText().toString();
                 word = mUserText.getText().toString();
 
-                //Check for duplicates to ensure only unique values are stored
-                if(!mTestList.contains(add)) {
-                    mTestList.add(word);
-                    mUserText.setText("");
-                }
+                // run duplicate check
+                dupCheck();
                 // notifyDataSetChanged
                 mArrayAdapter.notifyDataSetChanged();
-
                 // set number of entries text view
                 updateText();
-
                 // Call calcAverage Function
                 calcAverage();
 
@@ -157,7 +153,7 @@ public class MainActivity extends ActionBarActivity {
             mAvgText.setText(R.string.avg_length);
         }
     }
-
+    // update mNumberEntries Text
     public void updateText()
     {
         int num = mTestList.size();
@@ -169,6 +165,15 @@ public class MainActivity extends ActionBarActivity {
         else
         {
             mNumberEntries.setText(R.string.num_entries);
+        }
+    }
+    // Duplicate Check
+    public void dupCheck()
+    {
+        //Check for duplicates to ensure only unique values are stored
+        if(!mTestList.contains(add) && word.length() > 0) {
+            mTestList.add(word);
+            mUserText.setText("");
         }
     }
 
