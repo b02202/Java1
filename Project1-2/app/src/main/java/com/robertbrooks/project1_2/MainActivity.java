@@ -146,14 +146,30 @@ public class MainActivity extends ActionBarActivity {
         for (String word : mTestList)
             sum += word.length();
         average = (double) sum/mTestList.size();
-        // set mAvgText
-        mAvgText.setText(average + "");
+
+        // change text back to default if there are no entries in arrayList
+        if (average > 0)
+        {
+           mAvgText.setText(average + "");
+        }
+        else
+        {
+            mAvgText.setText(R.string.avg_length);
+        }
     }
 
     public void updateText()
     {
         int num = mTestList.size();
-        mNumberEntries.setText(num + "");
+        // change text back to default if there are no entries in arrayList
+        if (num > 0)
+        {
+            mNumberEntries.setText(num + "");
+        }
+        else
+        {
+            mNumberEntries.setText(R.string.num_entries);
+        }
     }
 
 }
