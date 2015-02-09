@@ -11,6 +11,7 @@
     <string name="user_alert">User Alert</string>
     <string name="ok_alert">OK</string>
     <string name="remove_alert">Remove</string>
+    <string name="main_title">It worked!</string>
 
 
 </resources>

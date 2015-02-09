@@ -10,5 +10,6 @@
     <string name="user_alert">Alerta Usuario</string>
     <string name="ok_alert">Bueno</string>
     <string name="remove_alert">Quitar</string>
+    <string name="main_title">Funcionó !</string>
 
 </resources>
