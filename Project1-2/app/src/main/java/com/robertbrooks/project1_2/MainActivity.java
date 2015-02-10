@@ -164,7 +164,7 @@ public class MainActivity extends ActionBarActivity {
             mNumberEntries.setText(R.string.num_entries);
         }
     }
-    // Duplicate Check
+    // Duplicate Check w/ empty text validation
     public void dupCheck()
     {
         //Check for duplicates to ensure only unique values are stored
