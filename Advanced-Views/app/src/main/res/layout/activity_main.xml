@@ -7,39 +7,38 @@
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
     android:orientation="vertical"
-    tools:context=".MainActivity">
-
-
+    android:background="@android:color/background_dark">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
+        <Spinner
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            android:id="@+id/listTitle"
-            android:text="@string/list_title"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="@dimen/abc_text_size_title_material"
-            android:hint="@string/list_title" />
+            android:id="@+id/Spinner"
+            android:background="@android:color/background_light"
+            android:alpha="0.7"
+            android:layout_weight="1"></Spinner>
+
 
 
 
     </LinearLayout>
-
-    <ListView
-        android:paddingTop="16dp"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/listView"
-        android:fastScrollAlwaysVisible="false"
-        android:layout_weight="1"
-        android:entries="@array/topFive"></ListView>
-
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:id="@+id/listTitle"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="@dimen/abc_text_size_large_material"
+        android:text="@string/list_title"
+        android:layout_marginTop="16dp"
+        android:singleLine="false" />
 
 
 
