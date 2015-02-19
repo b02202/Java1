@@ -42,6 +42,9 @@ public class MainActivity extends ActionBarActivity {
     public ArrayList<String> spinList = new ArrayList<String>();
     public ArrayList<TourInfo> mtours = new ArrayList<TourInfo>();
 
+    // Initial run check bool for Spinner
+    private boolean intialrun = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +88,8 @@ public class MainActivity extends ActionBarActivity {
         }
         else
         {
-
-
+            // execute the layout for Portrait Orientation
+            portLayout();
         }
 
     }
@@ -118,6 +121,29 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
+    // Portrait Layout
+    public void portLayout()
+    {
+        mTitleText = (TextView) findViewById(R.id.listTitle);
+
+
+        setTourList();
+        // Attach Adapter to Spinner
+        mSpinner = (Spinner) findViewById(R.id.Spinner);
+
+        //spinList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.spinArray)));
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+        for(TourInfo info : mtours) {
+            adapter.add(info.getArtistName());
+            Log.d(TAG, info.getArtistName());
+        }
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(adapter);
+        addListeners();
+        Log.d(TAG, "this is landscape");
+    }
+
     // set TourInfo
     public void setTourList()
     {
@@ -136,5 +162,28 @@ public class MainActivity extends ActionBarActivity {
         //String test =   mtours.get(0).getArtistName();
 
         //Log.d(TAG, test + "");
+    }
+
+    // Add Listeners to Spinner
+    public void addListeners() {
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?>  parent, View view, int position, long id) {
+                TourInfo spinSelected = mtours.get(position);
+                if(intialrun) {
+                    mTitleText.setText(getResources().getString(R.string.list_title));
+                    intialrun = false;
+                } else
+                    mTitleText.setText("Artist: " + spinSelected.getArtistName() +
+                            "\nTourName: " + spinSelected.getTourName() +
+                            "\nGross: " + spinSelected.getTourGross());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                mTitleText.setText(getResources().getString(R.string.list_title));
+            }
+        });
     }
 }
