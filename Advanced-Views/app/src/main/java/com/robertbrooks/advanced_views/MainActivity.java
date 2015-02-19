@@ -8,8 +8,11 @@ package com.robertbrooks.advanced_views;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -68,5 +71,70 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // Custom Functions
+
+    // Landscape or Portrait layout implementation
+    public void orientationRun()
+    {
+        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            // execute the layout for Landscape Orientation
+            landLayout();
+        }
+        else
+        {
+
+
+        }
+
+    }
+    // Landscape Layout
+    public void landLayout()
+    {
+        mTitleText = (TextView) findViewById(R.id.listTitle);
+        setTourList();
+        mListView = (ListView) findViewById(R.id.listView);
+        ArrayAdapter listadapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
+        for(TourInfo info : mtours) {
+            listadapter.add(info.getArtistName());
+        }
+        mListView.setAdapter(listadapter);
+        Log.d(TAG, "this is landscape");
+
+        // listView Implementation
+        final ListView listView = (ListView) findViewById(R.id.listView);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "Position: " + position);
+                TourInfo infoSelected = mtours.get(position);
+
+                mTitleText.setText("Artist: " + infoSelected.getArtistName() +
+                        "\nTour Name: " + infoSelected.getTourName() +
+                        "\nGross: " + infoSelected.getTourGross());
+            }
+        });
+    }
+
+    // set TourInfo
+    public void setTourList()
+    {
+        TourInfo stones1 = new TourInfo("The Rolling Stones", "Voodoo Lounge", "$449,5269,710");
+        TourInfo stones2 = new TourInfo("The Rolling Stones", "Bridges to Babylon Tour", "$396,455,288");
+        TourInfo pinkFloyd = new TourInfo("Pink Floyd", "The Division Bell Tour", "$394,788,505");
+        TourInfo u2 = new TourInfo("U2", "Popmart Tour", "$252,212,913");
+        TourInfo michaelJackson = new TourInfo("Michael Jackson", "History World Tour", "$246,518,544");
+        // add TourInfo objects to mtours ArrayList
+        mtours.add(stones1);
+        mtours.add(stones2);
+        mtours.add(pinkFloyd);
+        mtours.add(u2);
+        mtours.add(michaelJackson);
+
+        //String test =   mtours.get(0).getArtistName();
+
+        //Log.d(TAG, test + "");
     }
 }
