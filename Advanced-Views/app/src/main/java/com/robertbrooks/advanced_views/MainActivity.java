@@ -50,6 +50,9 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // check orientation and set up elements and data accordingly
+        orientationRun();
     }
 
 
@@ -91,9 +94,8 @@ public class MainActivity extends ActionBarActivity {
             // execute the layout for Portrait Orientation
             portLayout();
         }
-
     }
-    // Landscape Layout
+    // Landscape Layout with listView
     public void landLayout()
     {
         mTitleText = (TextView) findViewById(R.id.listTitle);
@@ -121,7 +123,7 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
-    // Portrait Layout
+    // Portrait Layout with spinner
     public void portLayout()
     {
         mTitleText = (TextView) findViewById(R.id.listTitle);
