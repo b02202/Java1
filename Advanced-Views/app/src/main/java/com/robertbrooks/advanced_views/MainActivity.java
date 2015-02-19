@@ -1,6 +1,7 @@
 // Robert Brooks
 // Java 1
 // Project 3
+// MainActivity.java
 
 package com.robertbrooks.advanced_views;
 
@@ -9,13 +10,34 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+import TourInfo.TourInfo;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    // variables
+    // Log String
+    final String TAG = "DEV3";
 
+    //Spinner listView and TextView
+    public ListView mListView;
+    public TextView mTitleText;
+    public Spinner mSpinner;
 
+    // Adapters
+    public ArrayAdapter<String> mSpinnerAdapter;
+    public ArrayAdapter<String> mListAdapter;
+
+    // ArrayList Collections
+    public ArrayList<String> topList ;;
+    public ArrayList<String> spinList = new ArrayList<String>();
+    public ArrayList<TourInfo> mtours = new ArrayList<TourInfo>();
 
 
     @Override
