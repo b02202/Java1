@@ -34,18 +34,11 @@ public class MainActivity extends ActionBarActivity {
     public TextView mTitleText;
     public Spinner mSpinner;
 
-    // Adapters
-    public ArrayAdapter<String> mSpinnerAdapter;
-    public ArrayAdapter<String> mListAdapter;
-
     // ArrayList Collections
-    public ArrayList<String> topList;
-    ;
-    public ArrayList<String> spinList = new ArrayList<String>();
     public ArrayList<TourInfo> mtours = new ArrayList<TourInfo>();
 
     // Initial run check bool for Spinner
-    private boolean intialrun = true;
+    private boolean intialRun = true;
 
 
     @Override
@@ -101,11 +94,11 @@ public class MainActivity extends ActionBarActivity {
         mTitleText = (TextView) findViewById(R.id.listTitle);
         mListView = (ListView) findViewById(R.id.listView);
         // Create array adapter for listView
-        ArrayAdapter listadapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
+        ArrayAdapter listAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
         // Add artist names to adapter
-        addArtistName(listadapter);
+        addArtistName(listAdapter);
         // set adapter to listView
-        mListView.setAdapter(listadapter);
+        mListView.setAdapter(listAdapter);
         Log.d(TAG, "this is landscape");
 
         // listView implementation
@@ -153,9 +146,9 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // check for initial run if true default text will display
-                if (intialrun) {
+                if (intialRun) {
                     populateText(getResources().getString(R.string.list_title));
-                    intialrun = false;
+                    intialRun = false;
                 }
                 else
                 {
@@ -215,9 +208,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     // set initial run boolean
-    public void setIntialrun(boolean intialrun)
-    {
+    //public void setIntialrun(boolean intialRun)
+   // {
 
-    }
+    //}
 
 }
