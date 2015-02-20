@@ -4,7 +4,7 @@
     <string name="app_name">Advanced Views</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="list_title">Top Grossing Tours of the 1990\'s</string>
+    <string name="list_title">Top 5 Grossing Tours of the 1990\'s</string>
     <string-array name="topFive">
         <item>The Rolling Stones - 94-95</item>
         <item>The Rolling Stones - 97-98</item>
