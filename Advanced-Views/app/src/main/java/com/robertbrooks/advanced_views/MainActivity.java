@@ -35,10 +35,10 @@ public class MainActivity extends ActionBarActivity {
     public Spinner mSpinner;
 
     // ArrayList Collections
-    public ArrayList<TourInfo> mtours = new ArrayList<TourInfo>();
+    public ArrayList<TourInfo> mTours = new ArrayList<TourInfo>();
 
     // Initial run check bool for Spinner
-    private boolean intialRun = true;
+    private boolean initialRun = true;
 
 
     @Override
@@ -132,12 +132,12 @@ public class MainActivity extends ActionBarActivity {
         TourInfo pinkFloyd = new TourInfo("Pink Floyd", "The Division Bell Tour", "$394,788,505");
         TourInfo u2 = new TourInfo("U2", "Popmart Tour", "$252,212,913");
         TourInfo michaelJackson = new TourInfo("Michael Jackson", "History World Tour", "$246,518,544");
-        // add TourInfo objects to mtours ArrayList
-        mtours.add(stones1);
-        mtours.add(stones2);
-        mtours.add(pinkFloyd);
-        mtours.add(u2);
-        mtours.add(michaelJackson);
+        // add TourInfo objects to mTours ArrayList
+        mTours.add(stones1);
+        mTours.add(stones2);
+        mTours.add(pinkFloyd);
+        mTours.add(u2);
+        mTours.add(michaelJackson);
     }
 
     // Add Listeners to Spinner
@@ -146,9 +146,9 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // check for initial run if true default text will display
-                if (intialRun) {
+                if (initialRun) {
                     populateText(getResources().getString(R.string.list_title));
-                    intialRun = false;
+                    initialRun = false;
                 }
                 else
                 {
@@ -183,7 +183,7 @@ public class MainActivity extends ActionBarActivity {
     public void addArtistName(ArrayAdapter adapterName)
     {
         // add each artist name from mTours to adapter
-        for (TourInfo info : mtours) {
+        for (TourInfo info : mTours) {
             adapterName.add(info.getArtistName());
         }
     }
@@ -192,7 +192,7 @@ public class MainActivity extends ActionBarActivity {
     public void populate(int selPosition)
     {
         // create string based on the selected adapterView position
-        TourInfo infoSelected = mtours.get(selPosition);
+        TourInfo infoSelected = mTours.get(selPosition);
         String data = ("Artist: " + infoSelected.getArtistName() +
                 "\nTour Name: " + infoSelected.getTourName() +
                 "\nGross: " + infoSelected.getTourGross());
@@ -208,7 +208,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     // set initial run boolean
-    //public void setIntialrun(boolean intialRun)
+    //public void setInitialRun(boolean initialRun)
    // {
 
     //}
