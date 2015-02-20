@@ -1,5 +1,7 @@
 // Robert Brooks
-// TourInfo.java
+// Java 1
+// Project 3
+//TourInfo.java
 // Created on 2/19/2015
 package TourInfo;
 
