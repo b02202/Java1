@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import TourInfo.TourInfo;
 
@@ -38,7 +39,8 @@ public class MainActivity extends ActionBarActivity {
     public ArrayAdapter<String> mListAdapter;
 
     // ArrayList Collections
-    public ArrayList<String> topList ;;
+    public ArrayList<String> topList;
+    ;
     public ArrayList<String> spinList = new ArrayList<String>();
     public ArrayList<TourInfo> mtours = new ArrayList<TourInfo>();
 
@@ -54,7 +56,6 @@ public class MainActivity extends ActionBarActivity {
         // check orientation and set up elements and data accordingly
         orientationRun();
     }
-
 
 
     @Override
@@ -82,73 +83,57 @@ public class MainActivity extends ActionBarActivity {
     // Custom Functions
 
     // Landscape or Portrait layout implementation
-    public void orientationRun()
-    {
-        if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-        {
+    public void orientationRun() {
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // execute the layout for Landscape Orientation
             landLayout();
-        }
-        else
-        {
+        } else {
             // execute the layout for Portrait Orientation
             portLayout();
         }
     }
+
     // Landscape Layout with listView
-    public void landLayout()
-    {
-        mTitleText = (TextView) findViewById(R.id.listTitle);
+    public void landLayout() {
+        // populate mTours arrayList with custom data
         setTourList();
+        // References
+        mTitleText = (TextView) findViewById(R.id.listTitle);
         mListView = (ListView) findViewById(R.id.listView);
+        // Create array adapter for listView
         ArrayAdapter listadapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
-        for(TourInfo info : mtours) {
-            listadapter.add(info.getArtistName());
-        }
+        // Add artist names to adapter
+        addArtistName(listadapter);
+        // set adapter to listView
         mListView.setAdapter(listadapter);
         Log.d(TAG, "this is landscape");
 
-        // listView Implementation
-        final ListView listView = (ListView) findViewById(R.id.listView);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "Position: " + position);
-                TourInfo infoSelected = mtours.get(position);
-
-                mTitleText.setText("Artist: " + infoSelected.getArtistName() +
-                        "\nTour Name: " + infoSelected.getTourName() +
-                        "\nGross: " + infoSelected.getTourGross());
-            }
-        });
+        // listView implementation
+        setListView();
     }
 
     // Portrait Layout with spinner
-    public void portLayout()
-    {
-        mTitleText = (TextView) findViewById(R.id.listTitle);
-
-
+    public void portLayout() {
+        // set arrayList
         setTourList();
-        // Attach Adapter to Spinner
+        // References
+        mTitleText = (TextView) findViewById(R.id.listTitle);
         mSpinner = (Spinner) findViewById(R.id.Spinner);
-
-        //spinList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.spinArray)));
+        // create ArrayAdapter for Spinner
         ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-        for(TourInfo info : mtours) {
-            adapter.add(info.getArtistName());
-            Log.d(TAG, info.getArtistName());
-        }
-
+        // Add artist names to adapter
+        addArtistName(adapter);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Connect ListView and Adapter
         mSpinner.setAdapter(adapter);
+        // add listeners to Spinner
         addListeners();
         Log.d(TAG, "this is landscape");
     }
 
     // set TourInfo
-    public void setTourList()
-    {
+    public void setTourList() {
+        // populate custom TourInfo objects
         TourInfo stones1 = new TourInfo("The Rolling Stones", "Voodoo Lounge", "$449,5269,710");
         TourInfo stones2 = new TourInfo("The Rolling Stones", "Bridges to Babylon Tour", "$396,455,288");
         TourInfo pinkFloyd = new TourInfo("Pink Floyd", "The Division Bell Tour", "$394,788,505");
@@ -160,32 +145,79 @@ public class MainActivity extends ActionBarActivity {
         mtours.add(pinkFloyd);
         mtours.add(u2);
         mtours.add(michaelJackson);
-
-        //String test =   mtours.get(0).getArtistName();
-
-        //Log.d(TAG, test + "");
     }
 
     // Add Listeners to Spinner
     public void addListeners() {
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?>  parent, View view, int position, long id) {
-                TourInfo spinSelected = mtours.get(position);
-                if(intialrun) {
-                    mTitleText.setText(getResources().getString(R.string.list_title));
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // check for initial run if true default text will display
+                if (intialrun) {
+                    populateText(getResources().getString(R.string.list_title));
                     intialrun = false;
-                } else
-                    mTitleText.setText("Artist: " + spinSelected.getArtistName() +
-                            "\nTourName: " + spinSelected.getTourName() +
-                            "\nGross: " + spinSelected.getTourGross());
+                }
+                else
+                {
+                    // populate text view
+                    populate(position);
+                }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mTitleText.setText(getResources().getString(R.string.list_title));
+                populateText(getResources().getString(R.string.list_title));
             }
         });
     }
+
+    // set ListView
+    public void setListView()
+    {
+        // ListView Implementation
+        final ListView listView = (ListView) findViewById(R.id.listView);
+         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+         @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "Position: " + position);
+                // populate detail textViews
+                populate(position);
+            }
+         });
+    }
+
+    // Add Artist Name
+    public void addArtistName(ArrayAdapter adapterName)
+    {
+        // add each artist name from mTours to adapter
+        for (TourInfo info : mtours) {
+            adapterName.add(info.getArtistName());
+        }
+    }
+
+    // Populate detail view
+    public void populate(int selPosition)
+    {
+        // create string based on the selected adapterView position
+        TourInfo infoSelected = mtours.get(selPosition);
+        String data = ("Artist: " + infoSelected.getArtistName() +
+                "\nTour Name: " + infoSelected.getTourName() +
+                "\nGross: " + infoSelected.getTourGross());
+        //populate textView
+        populateText(data);
+    }
+
+    // populate textViews
+    public void populateText(String data)
+    {
+        // set titleText TextView
+        mTitleText.setText(data);
+    }
+
+    // set initial run boolean
+    public void setIntialrun(boolean intialrun)
+    {
+
+    }
+
 }
