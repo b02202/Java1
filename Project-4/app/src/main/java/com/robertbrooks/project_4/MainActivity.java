@@ -4,15 +4,36 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    final String TAG = "DEV-4";
+
+
+    public ListView mListView;
+    public TextView mUserText;
+    private ArrayAdapter mArrayAdapter;
+    private ArrayList<String> mTestList = new ArrayList<String>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // References
+        mUserText = (TextView) findViewById(R.id.userText);
+        mListView = (ListView) findViewById(R.id.listView);
     }
+
+
+
 
 
     @Override
