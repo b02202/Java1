@@ -3,13 +3,17 @@ package com.robertbrooks.project_4;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 import java.util.ArrayList;
 
@@ -18,12 +22,18 @@ public class MainActivity extends ActionBarActivity {
 
     final String TAG = "DEV-4";
 
+    // Butterknife
+    @InjectView(R.id.userText) TextView userText;
+    @InjectView(R.id.textView) TextView resultText;
+    @InjectView(R.id.userButton) Button userButton;
+    @InjectView(R.id.progressBar) ProgressBar progBar;
 
-    public ListView mListView;
-    public TextView mUserText;
+
+
+    /*public TextView mUserText;
     private ArrayAdapter mArrayAdapter;
     private ArrayList<String> mTestList = new ArrayList<String>();
-    private ProgressBar progressBar;
+    private ProgressBar progressBar;*/
 
 
 
@@ -32,12 +42,14 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // References
-        mUserText = (TextView) findViewById(R.id.userText);
-        mListView = (ListView) findViewById(R.id.listView);
+        // BK Inject
+        ButterKnife.inject(this);
 
-       progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.INVISIBLE);
+        // set up textView Scrolling
+        resultText.setMovementMethod(new ScrollingMovementMethod());
+
+        // set progress bar to invisible
+        progBar.setVisibility(View.INVISIBLE);
 
     }
 
@@ -65,11 +77,11 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class MyTask extends AsyncTask<String, String, String> {
+    private class ATask extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
+            progBar.setVisibility(View.VISIBLE);
         }
 
         @Override
