@@ -1,11 +1,14 @@
 package com.robertbrooks.project_4;
 
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,6 +23,8 @@ public class MainActivity extends ActionBarActivity {
     public TextView mUserText;
     private ArrayAdapter mArrayAdapter;
     private ArrayList<String> mTestList = new ArrayList<String>();
+    private ProgressBar progressBar;
+
 
 
 
@@ -30,9 +35,11 @@ public class MainActivity extends ActionBarActivity {
         // References
         mUserText = (TextView) findViewById(R.id.userText);
         mListView = (ListView) findViewById(R.id.listView);
+
+       progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
+
     }
-
-
 
 
 
@@ -57,4 +64,28 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private class MyTask extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+        }
+    }
+
 }
