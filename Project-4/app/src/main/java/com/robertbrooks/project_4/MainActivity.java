@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 import java.util.ArrayList;
 
@@ -23,9 +24,9 @@ public class MainActivity extends ActionBarActivity {
     final String TAG = "DEV-4";
 
     // Butterknife
-    @InjectView(R.id.userText) TextView userText;
-    @InjectView(R.id.textView) TextView resultText;
-    @InjectView(R.id.userButton) Button userButton;
+    @InjectView(R.id.userText) TextView muserText;
+    @InjectView(R.id.textView) TextView mresultText;
+    @InjectView(R.id.userButton) Button muserButton;
     @InjectView(R.id.progressBar) ProgressBar progBar;
 
 
@@ -46,13 +47,19 @@ public class MainActivity extends ActionBarActivity {
         ButterKnife.inject(this);
 
         // set up textView Scrolling
-        resultText.setMovementMethod(new ScrollingMovementMethod());
+        mresultText.setMovementMethod(new ScrollingMovementMethod());
 
         // set progress bar to invisible
         progBar.setVisibility(View.INVISIBLE);
 
     }
-
+    @OnClick(R.id.userButton)
+    public void runTask()
+    {
+        // Run Async Task
+        ATask task = new ATask();
+        task.execute("Data 1", "Data 2", "Data 3");
+    }
 
 
     @Override
@@ -82,22 +89,45 @@ public class MainActivity extends ActionBarActivity {
         @Override
         protected void onPreExecute() {
             progBar.setVisibility(View.VISIBLE);
+            updateDisplay("Begin Task");
         }
 
         @Override
         protected String doInBackground(String... params) {
-            return null;
+
+            for (int i = 0; i < params.length; i++)
+            {
+                publishProgress("Processing " + params[i]);
+            }
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return "Task Complete";
+
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+        protected void onPostExecute(String result) {
+            progBar.setVisibility(View.INVISIBLE);
+            updateDisplay(result);
         }
 
         @Override
         protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
+            updateDisplay(values[0]);
         }
+    }
+
+    // Custom Functions
+
+    // Update Display
+    public void updateDisplay(String testMessage)
+    {
+        mresultText.append(testMessage + "\n");
+
     }
 
 }
