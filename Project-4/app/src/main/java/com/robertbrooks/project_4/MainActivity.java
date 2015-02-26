@@ -1,11 +1,9 @@
 package com.robertbrooks.project_4;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -15,22 +13,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-//import org.apache.commons.io.IOUtils;
-import org.json.JSONException;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,11 +31,13 @@ public class MainActivity extends ActionBarActivity {
 
     // Butterknife
     @InjectView(R.id.userText) TextView muserText;
-    @InjectView(R.id.textView) TextView mresultText;
+   // @InjectView(R.id.textView1) TextView mresultText;
     @InjectView(R.id.userButton) Button muserButton;
     @InjectView(R.id.progressBar) ProgressBar progBar;
+    @InjectView(R.id.listView) ListView mListView;
 
     List<ATask> tasks;
+    List<MLB> mlbList;
 
 
 
@@ -66,19 +58,38 @@ public class MainActivity extends ActionBarActivity {
         ButterKnife.inject(this);
 
         // set up textView Scrolling
-        mresultText.setMovementMethod(new ScrollingMovementMethod());
+       // mresultText.setMovementMethod(new ScrollingMovementMethod());
 
         // set progress bar to invisible
         progBar.setVisibility(View.INVISIBLE);
+
+        // set ListView to invisible
+        mListView.setVisibility(View.INVISIBLE);
+
+        tasks = new ArrayList<>();
 
     }
     @OnClick(R.id.userButton)
         public void run()
         {
+            //mresultText.setText("");
             String inputText = muserText.getText().toString();
+
+
             // Network Check
             if (isOnline())
             {
+                try {
+                    String redditUrl = "http://api.reddit.com/r/mlb/search.json";
+                    String redditSearch = inputText;
+                    String searchURL = (redditUrl + "?q=" + redditSearch + "&restrict_sr=on");
+                    runTask(searchURL);
+
+                    Log.i(TAG, "search url = " + searchURL);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e(TAG, "Invalid query");
+                }
 
             } else {
                 Toast.makeText(this, "Network isn't available", Toast.LENGTH_LONG).show();
@@ -132,21 +143,37 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         protected void onPreExecute() {
-            progBar.setVisibility(View.VISIBLE);
-            updateDisplay("Begin Task");
+            if (tasks.size() == 0)
+            {
+                progBar.setVisibility(View.VISIBLE);
+            }
+            tasks.add(this);
+
         }
 
-        //@TargetApi(Build.VERSION_CODES.KITKAT)
+
         @Override
         protected String doInBackground(String... params) {
+            String content = ManageHttp.getData(params[0]);
 
-            return null;
+            return content;
 
         }
+
 
         @Override
         protected void onPostExecute(String result) {
-            progBar.setVisibility(View.INVISIBLE);
+
+
+            mlbList = JSONParse.parse(result);
+            updateDisplay();
+            muserText.setText("");
+            tasks.remove(this);
+            if (tasks.size() == 0)
+            {
+                progBar.setVisibility(View.INVISIBLE);
+            }
+
             //MLB result = new MLB(apiData)
             //updateDisplay(result);
         }
@@ -160,18 +187,33 @@ public class MainActivity extends ActionBarActivity {
     // Custom Functions
 
     // Update Display
-    public void updateDisplay(String testMessage)
+    public void updateDisplay()
     {
-        mresultText.append(testMessage + "\n");
+        // create array adapter for listView
+        ArrayAdapter listAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
+        if (mlbList != null)
+        {
+            for (MLB mlb : mlbList)
+            {
+                String author = mlb.getAuthor();
+                String domain = mlb.getDomain();
+                String title = mlb.getTitle();
+                String outputString = ("\n" + title + "\n" + "Author: " + author + "\n" + domain + "\n");
 
+                    listAdapter.add(outputString);
+
+            }
+            mListView.setVisibility(View.VISIBLE);
+            mListView.setAdapter(listAdapter);
+        }
     }
 
     // run AsyncTask
-    public void runTask()
+    public void runTask(String urlSearch)
     {
         // Run Async Task
         ATask task = new ATask();
-        //task.execute("Data 1", "Data 2", "Data 3");
+        task.execute(urlSearch);
     }
 
     // Network Check

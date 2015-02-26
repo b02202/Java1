@@ -16,16 +16,18 @@ public class JSONParse {
         try{
             JSONObject data = new JSONObject(content).getJSONObject("data");
             JSONArray children = data.getJSONArray("children");
+
+
             List<MLB> mlbList = new ArrayList<>();
 
             for (int i = 0; i < children.length() ; i++) {
-                JSONObject obj = children.getJSONObject(i);
+                JSONObject obj = children.getJSONObject(i).getJSONObject("data");
                 MLB mlb = new MLB();
 
                 // Populate MLB
-                mlb.setTitle("title");
-                mlb.setAuthor("author");
-                mlb.setDomain("permalink");
+                mlb.setTitle(obj.getString("title"));
+                mlb.setAuthor(obj.getString("author"));
+                mlb.setDomain(obj.getString("domain"));
 
                 // add to mlbList
                 mlbList.add(mlb);
