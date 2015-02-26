@@ -6,14 +6,12 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -191,20 +189,29 @@ public class MainActivity extends ActionBarActivity {
     {
         // create array adapter for listView
         ArrayAdapter listAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
+        String title = "";
         if (mlbList != null)
         {
             for (MLB mlb : mlbList)
             {
                 String author = mlb.getAuthor();
                 String domain = mlb.getDomain();
-                String title = mlb.getTitle();
+                title = mlb.getTitle();
                 String outputString = ("\n" + title + "\n" + "Author: " + author + "\n" + domain + "\n");
 
-                    listAdapter.add(outputString);
+                       listAdapter.add(outputString);
 
             }
-            mListView.setVisibility(View.VISIBLE);
-            mListView.setAdapter(listAdapter);
+
+            if (title == "")
+            {
+                Toast.makeText(this, "Sorry, there are no search results", Toast.LENGTH_LONG).show();
+                mListView.setVisibility(View.INVISIBLE);
+            } else{
+                mListView.setVisibility(View.VISIBLE);
+                mListView.setAdapter(listAdapter);
+            }
+
         }
     }
 
