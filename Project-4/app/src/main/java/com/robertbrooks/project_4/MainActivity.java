@@ -53,6 +53,7 @@ public class MainActivity extends ActionBarActivity {
         // set ListView to invisible
         mListView.setVisibility(View.INVISIBLE);
 
+        // Create ArrayList for AsyncTasks
         tasks = new ArrayList<>();
 
     }
@@ -121,6 +122,7 @@ public class MainActivity extends ActionBarActivity {
             {
                 progBar.setVisibility(View.VISIBLE);
             }
+            // Add task to ArrayList
             tasks.add(this);
         }
 
@@ -140,6 +142,7 @@ public class MainActivity extends ActionBarActivity {
             updateDisplay();
             // Set user input text back to default
             muserText.setText("");
+            // remove task from AsyncTask ArrayList
             tasks.remove(this);
             // Set progress bar to invisible when AsyncTask is done
             if (tasks.size() == 0)
@@ -159,6 +162,7 @@ public class MainActivity extends ActionBarActivity {
         String title = "";
         if (mlbList != null)
         {
+            String input = muserText.getText().toString();
             // Loop through JSON and populate listAdapter
             for (MLB mlb : mlbList)
             {
@@ -172,7 +176,7 @@ public class MainActivity extends ActionBarActivity {
             if (title == "")
             {
                 // Alert user and set ListView to invisible
-                Toast.makeText(this, "Sorry, there are no search results", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Sorry, there are no search results for " + input, Toast.LENGTH_LONG).show();
                 mListView.setVisibility(View.INVISIBLE);
             } else{
                 // Set ListView to visible and set adapter to populate ListView
