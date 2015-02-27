@@ -1,8 +1,11 @@
+// Robert Brooks
+// MLB.java
 package com.robertbrooks.project_4;
 
 /**
  * Created by Bob on 2/25/2015.
  */
+// custom data class
 public class MLB {
 
     private String title;

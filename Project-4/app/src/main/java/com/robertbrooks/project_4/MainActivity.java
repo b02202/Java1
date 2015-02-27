@@ -1,12 +1,14 @@
+// Robert Brooks
+// MainActivity.java
 package com.robertbrooks.project_4;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,25 +40,12 @@ public class MainActivity extends ActionBarActivity {
     List<MLB> mlbList;
 
 
-
-
-    /*public TextView mUserText;
-    private ArrayAdapter mArrayAdapter;
-    private ArrayList<String> mTestList = new ArrayList<String>();
-    private ProgressBar progressBar;*/
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // BK Inject
         ButterKnife.inject(this);
-
-        // set up textView Scrolling
-       // mresultText.setMovementMethod(new ScrollingMovementMethod());
 
         // set progress bar to invisible
         progBar.setVisibility(View.INVISIBLE);
@@ -67,53 +56,40 @@ public class MainActivity extends ActionBarActivity {
         tasks = new ArrayList<>();
 
     }
+    // ButterKnife Button Implementation
     @OnClick(R.id.userButton)
         public void run()
         {
-            //mresultText.setText("");
+            // get user input text
             String inputText = muserText.getText().toString();
-
 
             // Network Check
             if (isOnline())
             {
                 try {
+                    // Create Query String
                     String redditUrl = "http://api.reddit.com/r/mlb/search.json";
-                    String redditSearch = inputText;
-                    String searchURL = (redditUrl + "?q=" + redditSearch + "&restrict_sr=on");
+                    String searchURL = (redditUrl + "?q=" + inputText + "&restrict_sr=on");
+                    // Run AsyncTask
                     runTask(searchURL);
 
-                    Log.i(TAG, "search url = " + searchURL);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.e(TAG, "Invalid query");
+                    // Alert user
+                    Toast.makeText(this, "Invalid Query", Toast.LENGTH_LONG).show();
                 }
-
             } else {
+                // Alert user
                 Toast.makeText(this, "Network isn't available", Toast.LENGTH_LONG).show();
             }
-
-
-           // URL searchURL = null;
-            /*try {
-                String redditUrl = "http://api.reddit.com/r/mlb/search.json";
-                String redditSearch = inputText;
-                URL searchURL = new URL(redditUrl + "?q=" + inputText + "&restrict_sr=on");
-                new ATask().execute(searchURL);
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(TAG, "Invalid query");
-            }*/
-
-
-
-            //http://www.reddit.com/r/volvo/search.xml?q=wagon&restrict_sr=on
-
-
-            //runTask();
         }
 
-
+    // Figure out how to keep listView
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        super.onConfigurationChanged(newConfig);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -128,58 +104,49 @@ public class MainActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
+    // AsyncTask Implementation
     private class ATask extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
+           // Set progress bar to visible
             if (tasks.size() == 0)
             {
                 progBar.setVisibility(View.VISIBLE);
             }
             tasks.add(this);
-
         }
-
 
         @Override
         protected String doInBackground(String... params) {
+            // Get string from HttpURLConnection
             String content = ManageHttp.getData(params[0]);
-
             return content;
-
         }
-
 
         @Override
         protected void onPostExecute(String result) {
 
-
+            // Parse JSON
             mlbList = JSONParse.parse(result);
+            // Update ListView
             updateDisplay();
+            // Set user input text back to default
             muserText.setText("");
             tasks.remove(this);
+            // Set progress bar to invisible when AsyncTask is done
             if (tasks.size() == 0)
             {
                 progBar.setVisibility(View.INVISIBLE);
             }
-
-            //MLB result = new MLB(apiData)
-            //updateDisplay(result);
         }
-
-        /*@Override
-        protected void onProgressUpdate(String... values) {
-            updateDisplay(values[0]);
-        }*/
     }
 
     // Custom Functions
@@ -192,39 +159,37 @@ public class MainActivity extends ActionBarActivity {
         String title = "";
         if (mlbList != null)
         {
+            // Loop through JSON and populate listAdapter
             for (MLB mlb : mlbList)
             {
                 String author = mlb.getAuthor();
                 String domain = mlb.getDomain();
                 title = mlb.getTitle();
                 String outputString = ("\n" + title + "\n" + "Author: " + author + "\n" + domain + "\n");
-
-                       listAdapter.add(outputString);
-
+                listAdapter.add(outputString);
             }
-
+            // Check to see if there are no results
             if (title == "")
             {
+                // Alert user and set ListView to invisible
                 Toast.makeText(this, "Sorry, there are no search results", Toast.LENGTH_LONG).show();
                 mListView.setVisibility(View.INVISIBLE);
             } else{
+                // Set ListView to visible and set adapter to populate ListView
                 mListView.setVisibility(View.VISIBLE);
                 mListView.setAdapter(listAdapter);
             }
-
         }
     }
 
-    // run AsyncTask
+    // Run AsyncTask
     public void runTask(String urlSearch)
     {
-        // Run Async Task
         ATask task = new ATask();
         task.execute(urlSearch);
     }
 
     // Network Check
-
     protected boolean isOnline()
     {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -1,3 +1,5 @@
+// Robert Brooks
+// ManageHttp.java
 package com.robertbrooks.project_4;
 
 import java.io.BufferedReader;
@@ -13,22 +15,23 @@ public class ManageHttp {
 
     public static String getData(String urlString)
     {
-
+        // Create buffered reader
         BufferedReader reader = null;
-
         try {
             URL url = new URL(urlString);
+            // Create HttpURLConnection with url
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
-
+            // Create String Builder
             StringBuilder sBuilder = new StringBuilder();
+            // Set Buffered Reader to read input stream from HttpURLConnection
             reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
             String dataLine;
+            // Loop through input Stream and append String Builder
             while ((dataLine = reader.readLine()) != null)
             {
                 sBuilder.append(dataLine + "\n");
             }
-
             return sBuilder.toString();
 
         } catch (IOException e)
@@ -36,6 +39,7 @@ public class ManageHttp {
             e.printStackTrace();
             return null;
         } finally {
+            // close Buffered Reader
             if (reader != null)
             {
                 try {
